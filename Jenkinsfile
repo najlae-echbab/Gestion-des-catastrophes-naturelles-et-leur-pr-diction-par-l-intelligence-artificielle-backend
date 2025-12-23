@@ -1,56 +1,46 @@
 pipeline {
     agent any
-    tools{
-    jdk 'JDK17'
-    maven 'Maven3'
 
-
+    tools {
+        jdk 'jdk17'
+        maven 'Maven'
     }
+
     stages {
 
-            stage('Checkout') {
-                steps {
-                    checkout scm
-                }
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
+        }
 
-            stage('build et le test'){
-                steps{
+        stage('Build et Tests') {
+            steps {
                 bat 'mvn clean verify'
-                 }
             }
-        stage('SonarQube Test'){
-            steps{
-                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                 bat'''
-                     mvn sonar:sonar ^
+        }
+
+        stage('Analyse SonarQube') {
+            steps {
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    bat '''
+                      mvn sonar:sonar ^
+                      -Dsonar.host.url=http://localhost:9000 ^
                       -Dsonar.projectKey=pfa-backend ^
                       -Dsonar.projectName=pfa-backend ^
-                      -Dsonar.host.url=http://localhost:9000 ^
-                       -Dsonar.token=%SONAR_TOKEN%
-                 '''
-
-
-                 }
+                      -Dsonar.token=%SONAR_TOKEN%
+                    '''
+                }
             }
-
         }
+    }
 
- post {
+    post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo ' Pipeline terminé avec succès'
         }
         failure {
-            echo 'Pipeline failed!'
-        }
-        cleanup {
-            cleanWs()
+            echo ' Pipeline échoué'
         }
     }
-
-
-    }
-
-
-
 }
