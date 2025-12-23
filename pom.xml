@@ -29,6 +29,10 @@
     <properties>
         <java.version>17</java.version>
         <spring-ai.version>1.0.0-M7</spring-ai.version>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+
+        <sonar.login>squ_1e42938aafdfb61a479d4ae389c77343be9be535</sonar.login>
+
     </properties>
     <dependencies>
         <dependency>
@@ -55,6 +59,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+
 
 
 
@@ -117,7 +122,17 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
+
+            </plugin>
         </plugins>
+
     </build>
+
+
 
 </project>
