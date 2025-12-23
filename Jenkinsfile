@@ -23,6 +23,7 @@ pipeline {
         stage('Analyse SonarQube') {
             steps {
                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                 echo "First 5 letters : ${SONAR_TOKEN.substring(0, 5)}..."
                     bat '''
                       mvn sonar:sonar ^
                       -Dsonar.host.url=http://localhost:9000 ^
