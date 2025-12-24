@@ -34,6 +34,20 @@ pipeline {
                 }
             }
         }
+        stage('Docker Build') {
+                    steps {
+                        bat 'docker build -t pfa-backend .'
+                    }
+                }
+
+                stage('Docker Compose Deploy') {
+                    steps {
+                        bat '''
+                        docker compose down
+                        docker compose up -d
+                        '''
+                    }
+                }
     }
 
     post {
