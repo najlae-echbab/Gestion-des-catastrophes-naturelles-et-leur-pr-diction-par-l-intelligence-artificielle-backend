@@ -40,14 +40,14 @@ pipeline {
                     }
                 }
 
-                stage('Docker Compose Deploy') {
-                    steps {
-                        bat '''
-                        docker compose down
-                        docker compose up -d
-                        '''
-                    }
-                }
+                 stage('Docker Compose Deploy') {
+                            steps {
+                                bat '''
+                                docker compose down --remove-orphans
+                                docker compose up -d
+                                '''
+                            }
+                        }
     }
 
     post {

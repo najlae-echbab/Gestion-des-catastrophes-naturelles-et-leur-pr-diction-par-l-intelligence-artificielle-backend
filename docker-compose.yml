@@ -1,9 +1,6 @@
-version: "3.9"
-
 services:
   postgres:
     image: postgres:16
-    container_name: pfa-postgres
     environment:
       POSTGRES_DB: gestion_catastrophes
       POSTGRES_USER: postgres
@@ -13,7 +10,6 @@ services:
 
   backend:
     image: pfa-backend
-    container_name: pfa-backend-container
     ports:
       - "8085:8085"
     depends_on:
